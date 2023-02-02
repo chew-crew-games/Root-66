@@ -1,0 +1,20 @@
+name: Unity GameCI Activation
+
+on: workflow_dispatch
+
+# Run this manually while completing https://game.ci/docs/github/activation
+# Also see https://github.com/actions/upload-artifact#where-does-the-upload-go
+jobs:
+  activation:
+    name: Request manual activation file 🔑
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request manual activation file
+        id: getManualLicenseFile
+        uses: game-ci/unity-request-activation-file@v2
+      - name: Expose as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.getManualLicenseFile.outputs.filePath }}
+          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
+          retention-days: 1

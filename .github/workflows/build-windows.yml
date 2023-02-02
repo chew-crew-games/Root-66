@@ -1,0 +1,50 @@
+name: Windows - Build and create release 
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
+  # Uncomment above for automatic builds upon pushing to main branch
+
+# Requires Unity secrets to be set! See activation.yml
+jobs:
+  build-for-windows:
+    name: Build for Windows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create env variables
+        run: |
+          date="$(date +"%Y-%m-%d")"
+          tag="Release_${{ github.run_number }}_$date"
+          build_file="$tag_win64.zip"
+          echo "date=$date" >> $GITHUB_ENV
+          echo "tag=$tag" >> $GITHUB_ENV
+          echo "build_file=$build_file" >> $GITHUB_ENV
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneWindows64
+      - name: Zip output
+        run: |
+          zip -r ${{ env.build_file }} ./build
+          echo "Exported: ${{ env.build_file }}"
+      - name: Create tag & release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "Release #${{ github.run_number }} ${{ env.date }}"
+          tag_name: ${{ env.tag }}
+          files: ${{ env.build_file }}
