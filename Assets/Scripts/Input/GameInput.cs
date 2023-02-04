@@ -12,6 +12,8 @@ public static class GameInput {
   public static event Action PlayerPauseEvent = delegate { };
   public static event Action PlayerJumpStartedEvent = delegate { };
   public static event Action PlayerJumpCanceledEvent = delegate { };
+  public static event Action PlayerMoveDigitalLeftEvent = delegate { };
+  public static event Action PlayerMoveDigitalRightEvent = delegate { };
   #endregion
 
   static GameInput() {
@@ -52,5 +54,8 @@ public static class GameInput {
     InputActions.Player.Interact.canceled += (_) => PlayerInteractEvent.Invoke();
     InputActions.Player.Inventory.canceled += (_) => PlayerInventoryEvent.Invoke();
     InputActions.Player.Pause.canceled += (_) => PlayerPauseEvent.Invoke();
+
+    InputActions.Player.DigitalLeft.canceled += (_) => PlayerMoveDigitalLeftEvent();
+    InputActions.Player.DigitalRight.canceled += (_) => PlayerMoveDigitalRightEvent();
   }
 }
