@@ -1,30 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class SpawnFood : MonoBehaviour
 {
-    // Start is called before the first frame update
 
+    public GameObject cuber;
 
-    private Vector3 mousePos;
-    private Vector3 objectPos;
-    public GameObject yourPrefab;
-
-
-    private void Update()
+    void Update()
     {
 
-        OnMouseDown();
+        if (Input.GetButtonDown("Fire1"))
+        {
+            print(Input.mousePosition);
+            Vector3 p = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f));
+            print(p);
+            print(p.x);
+            print(p.y);
 
-    }
+            Instantiate(cuber, new Vector3(p.x, p.y, 0.0f), Quaternion.identity);
 
-    public void OnMouseDown()
-    {
-        mousePos = Input.mousePosition;
-        mousePos.z = 2.0f;
-        objectPos = Camera.main.ScreenToWorldPoint(mousePos);
-        Instantiate(yourPrefab, objectPos, Quaternion.identity);
+        }
     }
-    
 }
+    
