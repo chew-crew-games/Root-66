@@ -98,24 +98,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""DigitalLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""1d21ca08-4ca1-488f-9ea2-b8d5eade15af"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""DigitalRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""44959430-fead-4231-bf47-2d25023cc1b9"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -415,28 +397,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Action 2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""dea4bde6-cd65-45b0-aac9-acf84304e0d5"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DigitalLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9461a6e1-90be-4ed1-8b7a-6ab041f1f281"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DigitalRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -514,8 +474,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Action1 = m_Player.FindAction("Action 1", throwIfNotFound: true);
         m_Player_Action2 = m_Player.FindAction("Action 2", throwIfNotFound: true);
-        m_Player_DigitalLeft = m_Player.FindAction("DigitalLeft", throwIfNotFound: true);
-        m_Player_DigitalRight = m_Player.FindAction("DigitalRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -583,8 +541,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Action1;
     private readonly InputAction m_Player_Action2;
-    private readonly InputAction m_Player_DigitalLeft;
-    private readonly InputAction m_Player_DigitalRight;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -597,8 +553,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Action1 => m_Wrapper.m_Player_Action1;
         public InputAction @Action2 => m_Wrapper.m_Player_Action2;
-        public InputAction @DigitalLeft => m_Wrapper.m_Player_DigitalLeft;
-        public InputAction @DigitalRight => m_Wrapper.m_Player_DigitalRight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -632,12 +586,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Action2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction2;
                 @Action2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction2;
                 @Action2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction2;
-                @DigitalLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDigitalLeft;
-                @DigitalLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDigitalLeft;
-                @DigitalLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDigitalLeft;
-                @DigitalRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDigitalRight;
-                @DigitalRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDigitalRight;
-                @DigitalRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDigitalRight;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -666,12 +614,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Action2.started += instance.OnAction2;
                 @Action2.performed += instance.OnAction2;
                 @Action2.canceled += instance.OnAction2;
-                @DigitalLeft.started += instance.OnDigitalLeft;
-                @DigitalLeft.performed += instance.OnDigitalLeft;
-                @DigitalLeft.canceled += instance.OnDigitalLeft;
-                @DigitalRight.started += instance.OnDigitalRight;
-                @DigitalRight.performed += instance.OnDigitalRight;
-                @DigitalRight.canceled += instance.OnDigitalRight;
             }
         }
     }
@@ -731,7 +673,5 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAction1(InputAction.CallbackContext context);
         void OnAction2(InputAction.CallbackContext context);
-        void OnDigitalLeft(InputAction.CallbackContext context);
-        void OnDigitalRight(InputAction.CallbackContext context);
     }
 }

@@ -76,24 +76,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "DigitalLeft",
-                    "type": "Button",
-                    "id": "1d21ca08-4ca1-488f-9ea2-b8d5eade15af",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "DigitalRight",
-                    "type": "Button",
-                    "id": "44959430-fead-4231-bf47-2d25023cc1b9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -391,28 +373,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Action 2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dea4bde6-cd65-45b0-aac9-acf84304e0d5",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DigitalLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9461a6e1-90be-4ed1-8b7a-6ab041f1f281",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DigitalRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

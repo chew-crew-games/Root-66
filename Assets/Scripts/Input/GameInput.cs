@@ -12,8 +12,6 @@ public static class GameInput {
   public static event Action PlayerPauseEvent = delegate { };
   public static event Action PlayerJumpStartedEvent = delegate { };
   public static event Action PlayerJumpCanceledEvent = delegate { };
-  public static event Action PlayerMoveDigitalLeftEvent = delegate { };
-  public static event Action PlayerMoveDigitalRightEvent = delegate { };
   #endregion
 
   static GameInput() {
@@ -34,15 +32,11 @@ public static class GameInput {
   }
 
   static void RegisterInputActionsEvents() {
-    InputActions.Player.Point.started +=
-      (context) => PlayerPointEvent.Invoke(context.ReadValue<Vector2>());
     InputActions.Player.Point.performed +=
       (context) => PlayerPointEvent.Invoke(context.ReadValue<Vector2>());
     InputActions.Player.Point.canceled +=
       (context) => PlayerPointEvent.Invoke(context.ReadValue<Vector2>());
 
-    InputActions.Player.Move.started +=
-      (context) => PlayerMoveEvent.Invoke(context.ReadValue<Vector2>());
     InputActions.Player.Move.performed +=
       (context) => PlayerMoveEvent.Invoke(context.ReadValue<Vector2>());
     InputActions.Player.Move.canceled +=
@@ -54,8 +48,5 @@ public static class GameInput {
     InputActions.Player.Interact.canceled += (_) => PlayerInteractEvent.Invoke();
     InputActions.Player.Inventory.canceled += (_) => PlayerInventoryEvent.Invoke();
     InputActions.Player.Pause.canceled += (_) => PlayerPauseEvent.Invoke();
-
-    InputActions.Player.DigitalLeft.canceled += (_) => PlayerMoveDigitalLeftEvent();
-    InputActions.Player.DigitalRight.canceled += (_) => PlayerMoveDigitalRightEvent();
   }
 }

@@ -14,9 +14,9 @@ public class VehicleManager : MonoBehaviour {
   public static float globalVelocity = 0;
 
   void Start() {
-    GameInput.PlayerMoveDigitalLeftEvent += () => OnPressDirection(true);
-    GameInput.PlayerMoveDigitalRightEvent += () => OnPressDirection(false);
-    GameInput.PlayerMoveEvent += OnMove;
+    // GameInput.PlayerMoveDigitalLeftEvent += () => OnPressDirection(true);
+    // GameInput.PlayerMoveDigitalRightEvent += () => OnPressDirection(false);
+    // GameInput.PlayerMoveEvent += OnMove;
   }
 
   void Update() {
@@ -29,8 +29,9 @@ public class VehicleManager : MonoBehaviour {
   }
 
   void OnMove(Vector2 movement) {
-    accelerationStatus * movement.y;
-    Debug.Log(accelerationStatus);
+    // accelerationStatus = movement.y;
+    // Debug.Log(movement.y);
+    // Debug.Log(accelerationStatus);
   }
 
   //   float CalcGlobalVelocity() {
@@ -43,23 +44,23 @@ public class VehicleManager : MonoBehaviour {
   // }
   //   }
 
-  void OnPressDirection(bool isLeft) {
-    var currentPosition = parentStreet.transform;
-    var num = isLeft ? 1 : -1;
+  void OnPressDirection(Vector2 movement) {
+    // var currentPosition = parentStreet.transform;
+    // var num = isLeft ? 1 : -1;
 
-    if (isLeft) {
-      if (objectPosition == 1) {
-        return;
-      }
-      objectPosition += 1;
-    } else {
-      if (objectPosition == -1) {
-        return;
-      }
-      objectPosition -= 1;
-    }
+    // if (isLeft) {
+    //   if (objectPosition == 1) {
+    //     return;
+    //   }
+    //   objectPosition += 1;
+    // } else {
+    //   if (objectPosition == -1) {
+    //     return;
+    //   }
+    //   objectPosition -= 1;
+    // }
 
-    parentStreet.transform.Translate(num * horizontalDistance, 0, 0, Space.World);
-    Debug.Log("translating: " + num);
+    // parentStreet.transform.Translate(num * horizontalDistance, 0, 0, Space.World);
+    // Debug.Log("translating: " + num);
   }
 }
