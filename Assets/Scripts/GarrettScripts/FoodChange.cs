@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraSwap : MonoBehaviour
+public class FoodChange : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -11,9 +11,11 @@ public class CameraSwap : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void OnCollisionEnter(Collision collision)
     {
-        
+        if (collision.gameObject.tag == "Blender")
+        {
+            Destroy(collision.gameObject);
+        }
     }
-
 }
