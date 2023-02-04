@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,13 +25,6 @@ public class VehicleManager : MonoBehaviour {
   void FixedUpdate() {
     // Broadcast new velocity to all other vehicles
     globalVelocity += -movement.y * acceleration;
-
-    // Also update the parent street's position
-    parentStreet.transform.Translate(new Vector3(
-      movement.x * -1 * horizontalSpeed * Time.deltaTime,
-      0,
-      0
-    ), Space.World);
   }
 
   void OnPressDirection(Vector2 lastMovement) {
