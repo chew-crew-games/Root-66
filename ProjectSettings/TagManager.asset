@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Blender
+  - Ingredient
+  - Carrot Smoothie
   layers:
   - Default
   - TransparentFX
