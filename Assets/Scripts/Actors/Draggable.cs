@@ -16,7 +16,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
   void FixedUpdate() {
     if (isDragging) {
-      rb.MovePosition(GetMouseWorldPos(draggingMousePosition) + mOffset);
+      rb.MovePosition((GetMouseWorldPos(draggingMousePosition) + mOffset));
     }
   }
 
