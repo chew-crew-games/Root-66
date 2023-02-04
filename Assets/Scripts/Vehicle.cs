@@ -8,7 +8,7 @@ public class Vehicle : MonoBehaviour {
 
   //  float velocity
   void Start() {
-    relativeVelocity = Random.Range(-1f, -1.3f);
+    relativeVelocity = Random.Range(-0.01f, -0.4f);
   }
 
   // Update is called once per frame

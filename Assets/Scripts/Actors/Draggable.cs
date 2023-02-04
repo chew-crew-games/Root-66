@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class Draggable : MonoBehaviour {
-  [SerializeField] public static float throwForce = 50f;
+  public static float throwForce = 100f;
 
   bool isDragging;
   Rigidbody rb;
@@ -15,18 +14,18 @@ public class Draggable : MonoBehaviour {
   void FixedUpdate() {
     if (isDragging) {
       Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue());
-      if (pos.x < -13.5f) {
-        pos.x = -13.5f;
-      }
-      if (pos.x > 13.5f) {
-        pos.x = 13.5f;
-      }
-      if (pos.y < -5.5f) {
-        pos.y = -5.5f;
-      }
-      if (pos.y > 5.5f) {
-        pos.y = 5.5f;
-      }
+      // if (pos.x < -13.5f) {
+      //   pos.x = -13.5f;
+      // }
+      // if (pos.x > 13.5f) {
+      //   pos.x = 13.5f;
+      // }
+      // if (pos.y < -5.5f) {
+      //   pos.y = -5.5f;
+      // }
+      // if (pos.y > 5.5f) {
+      //   pos.y = 5.5f;
+      // }
       rb.MovePosition(transform.position + (pos - transform.position) * Time.deltaTime * 10);
     }
   }
@@ -41,7 +40,7 @@ public class Draggable : MonoBehaviour {
     isDragging = false;
     rb.isKinematic = false;
     Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue()) - transform.position;
-    rb.AddForce((pos - transform.position)* throwForce);
+    rb.AddForce((pos - transform.position) * throwForce);
   }
 
   Vector3 GetMouseWorldPos(Vector2 pointerPosition) {
