@@ -20,7 +20,6 @@ public class Blender : MonoBehaviour {
             Debug.Log(string.Join(",",contents));
         }
     }
-  }
 
   public void OnMouseDown() {
     if (!isBlending && contents.Count > 0) {
