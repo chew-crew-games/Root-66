@@ -14,9 +14,7 @@ public class VehicleManager : MonoBehaviour {
   public static float globalVelocity = 0;
 
   void Start() {
-    // GameInput.PlayerMoveDigitalLeftEvent += () => OnPressDirection(true);
-    // GameInput.PlayerMoveDigitalRightEvent += () => OnPressDirection(false);
-    // GameInput.PlayerMoveEvent += OnMove;
+    GameInput.PlayerMoveEvent += (vector) => OnPressDirection(vector);
   }
 
   void Update() {
@@ -24,43 +22,30 @@ public class VehicleManager : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    // globalVelocity += accelerationStatus * acceleration;
-    // Debug.Log(globalVelocity);
+    globalVelocity += accelerationStatus * acceleration;
   }
-
-  void OnMove(Vector2 movement) {
-    // accelerationStatus = movement.y;
-    // Debug.Log(movement.y);
-    // Debug.Log(accelerationStatus);
-  }
-
-  //   float CalcGlobalVelocity() {
-
-
-  // if (accelerationStatus > 0) {
-  //   globalVelocity += acceleration;
-  // } else if(accelerationStatus < 0) {
-  //     globalVelocity += (accelerationStatus)
-  // }
-  //   }
 
   void OnPressDirection(Vector2 movement) {
-    // var currentPosition = parentStreet.transform;
-    // var num = isLeft ? 1 : -1;
+    // Change velocity
+    accelerationStatus = -movement.y;
 
-    // if (isLeft) {
-    //   if (objectPosition == 1) {
-    //     return;
-    //   }
-    //   objectPosition += 1;
-    // } else {
-    //   if (objectPosition == -1) {
-    //     return;
-    //   }
-    //   objectPosition -= 1;
-    // }
+    if (Mathf.Abs(movement.x) == 1) {
+      // Move street left and right
+      if (movement.x > 0) {
+        if (objectPosition == 1) {
+          return;
+        }
+        objectPosition += 1;
+      } else if (movement.x < 0) {
+        if (objectPosition == -1) {
+          return;
+        }
+        objectPosition -= 1;
+      } else {
+        return;
+      }
 
-    // parentStreet.transform.Translate(num * horizontalDistance, 0, 0, Space.World);
-    // Debug.Log("translating: " + num);
+      parentStreet.transform.Translate(movement.x * -1 * horizontalDistance, 0, 0, Space.World);
+    }
   }
 }

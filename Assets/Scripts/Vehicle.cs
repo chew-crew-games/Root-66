@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Vehicle : MonoBehaviour {
-  float relativeVelocity = -1f;
+  [SerializeField] float relativeVelocity;
 
   //  float velocity
   void Start() {
-
+    relativeVelocity = Random.Range(-0.8f, -1.2f);
   }
 
   // Update is called once per frame
-  void Update() {
-    
+  void FixedUpdate() {
+    transform.Translate(new Vector3(
+      0,
+      relativeVelocity + VehicleManager.globalVelocity,
+      0
+    ) * Time.deltaTime);
   }
 }
