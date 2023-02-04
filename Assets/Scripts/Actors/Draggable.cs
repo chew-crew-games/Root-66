@@ -1,14 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
-public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-  [SerializeField] public static float throwForce = 30;
+public class Draggable : MonoBehaviour {
+  [SerializeField] public static float throwForce = 50f;
 
   bool isDragging;
   Rigidbody rb;
-
-  Vector2 draggingMousePosition;
-  Vector3 mOffset;
 
   public void Start() {
     rb = GetComponent<Rigidbody>();
@@ -16,26 +14,34 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
   void FixedUpdate() {
     if (isDragging) {
-      rb.MovePosition(GetMouseWorldPos(draggingMousePosition) + mOffset);
+      Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue());
+      if (pos.x < -13.5f) {
+        pos.x = -13.5f;
+      }
+      if (pos.x > 13.5f) {
+        pos.x = 13.5f;
+      }
+      if (pos.y < -5.5f) {
+        pos.y = -5.5f;
+      }
+      if (pos.y > 5.5f) {
+        pos.y = 5.5f;
+      }
+      rb.MovePosition(transform.position + (pos - transform.position) * Time.deltaTime * 10);
     }
   }
 
-  public void OnBeginDrag(PointerEventData eventData) {
+  public void OnMouseDown() {
     rb.velocity = Vector3.zero;
     rb.isKinematic = true;
     isDragging = true;
-
-    mOffset = transform.position - GetMouseWorldPos(eventData.position);
   }
 
-  public void OnDrag(PointerEventData eventData) {
-    draggingMousePosition = eventData.position;
-  }
-
-  public void OnEndDrag(PointerEventData eventData) {
+  public void OnMouseUp() {
     isDragging = false;
     rb.isKinematic = false;
-    rb.AddForce(eventData.delta * throwForce);
+    Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue()) - transform.position;
+    rb.AddForce((pos - transform.position)* throwForce);
   }
 
   Vector3 GetMouseWorldPos(Vector2 pointerPosition) {

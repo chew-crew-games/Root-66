@@ -14,7 +14,7 @@ public class Blender : MonoBehaviour
         {"potato", new Color(.5f,.4f,.2f)}
     };
 
-    public void OnCollisionEnter2D(Collision2D col) {
+    public void OnCollisionEnter(Collision col) {
         if (!isBlending && col.gameObject.tag == "Ingredient") {
             contents.Add(col.gameObject.name);
             Destroy(col.gameObject);
