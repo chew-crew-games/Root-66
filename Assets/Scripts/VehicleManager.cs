@@ -5,18 +5,18 @@ using UnityEngine;
 public class VehicleManager : MonoBehaviour {
   [SerializeField] List<GameObject> vehicles = new List<GameObject>();
   [SerializeField] GameObject parentStreet;
-  [SerializeField] float horizontalDistance = 2f;
+  [SerializeField] float horizontalSpeed = 3f;
   [SerializeField] float acceleration = 2f;
 
   int objectPosition = 0;
   float accelerationStatus = 0;
 
+  Vector2 movement;
+
   public static float globalVelocity = 0;
 
   void Start() {
-    // GameInput.PlayerMoveDigitalLeftEvent += () => OnPressDirection(true);
-    // GameInput.PlayerMoveDigitalRightEvent += () => OnPressDirection(false);
-    // GameInput.PlayerMoveEvent += OnMove;
+    GameInput.PlayerMoveEvent += (vector) => OnPressDirection(vector);
   }
 
   void Update() {
@@ -24,43 +24,19 @@ public class VehicleManager : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    // globalVelocity += accelerationStatus * acceleration;
-    // Debug.Log(globalVelocity);
+    // Broadcast new velocity to all other vehicles
+    globalVelocity += -movement.y * acceleration;
+
+    // Also update the parent street's position
+    parentStreet.transform.Translate(new Vector3(
+      movement.x * -1 * horizontalSpeed * Time.deltaTime,
+      0,
+      0
+    ), Space.World);
   }
 
-  void OnMove(Vector2 movement) {
-    // accelerationStatus = movement.y;
-    // Debug.Log(movement.y);
-    // Debug.Log(accelerationStatus);
-  }
-
-  //   float CalcGlobalVelocity() {
-
-
-  // if (accelerationStatus > 0) {
-  //   globalVelocity += acceleration;
-  // } else if(accelerationStatus < 0) {
-  //     globalVelocity += (accelerationStatus)
-  // }
-  //   }
-
-  void OnPressDirection(Vector2 movement) {
-    // var currentPosition = parentStreet.transform;
-    // var num = isLeft ? 1 : -1;
-
-    // if (isLeft) {
-    //   if (objectPosition == 1) {
-    //     return;
-    //   }
-    //   objectPosition += 1;
-    // } else {
-    //   if (objectPosition == -1) {
-    //     return;
-    //   }
-    //   objectPosition -= 1;
-    // }
-
-    // parentStreet.transform.Translate(num * horizontalDistance, 0, 0, Space.World);
-    // Debug.Log("translating: " + num);
+  void OnPressDirection(Vector2 lastMovement) {
+    // Change velocity
+    movement = lastMovement;
   }
 }

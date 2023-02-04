@@ -1,35 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Draggable : MonoBehaviour
-{
-    private bool isDragging;
-    private Rigidbody2D rb;
+public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+  [SerializeField] public static float throwForce = 30;
 
-    public void Start() {
-        rb = GetComponent<Rigidbody2D>();
-    }
+  bool isDragging;
+  Rigidbody rb;
 
-    public void OnMouseDown() {
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = true;
-        isDragging = true;
-    }
+  Vector2 draggingMousePosition;
+  Vector3 mOffset;
 
-    public void OnMouseUp() {
-        rb.isKinematic = false;
-        isDragging = false;
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition - transform.position);
-        Vector2 pos = transform.position;
-        rb.AddForce((mousePosition - pos) * 100);
+  public void Start() {
+    rb = GetComponent<Rigidbody>();
+  }
+
+  void FixedUpdate() {
+    if (isDragging) {
+      rb.MovePosition(GetMouseWorldPos(draggingMousePosition) + mOffset);
     }
-    
-    void Update() {
-        if (isDragging) {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            Vector2 currPosition = transform.position;
-            rb.MovePosition(currPosition + mousePosition * Time.deltaTime * 50);
-        }
-    }
+  }
+
+  public void OnBeginDrag(PointerEventData eventData) {
+    rb.velocity = Vector3.zero;
+    rb.isKinematic = true;
+    isDragging = true;
+
+    mOffset = transform.position - GetMouseWorldPos(eventData.position);
+  }
+
+  public void OnDrag(PointerEventData eventData) {
+    draggingMousePosition = eventData.position;
+  }
+
+  public void OnEndDrag(PointerEventData eventData) {
+    isDragging = false;
+    rb.isKinematic = false;
+    rb.AddForce(eventData.delta * throwForce);
+  }
+
+  Vector3 GetMouseWorldPos(Vector2 pointerPosition) {
+    return Camera.main.ScreenToWorldPoint(new Vector3(
+      pointerPosition.x,
+      pointerPosition.y,
+      Camera.main.WorldToScreenPoint(transform.position).z
+    ));
+  }
 }
