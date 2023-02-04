@@ -5,11 +5,13 @@ using UnityEngine;
 public class VehicleManager : MonoBehaviour {
   [SerializeField] List<GameObject> vehicles = new List<GameObject>();
   [SerializeField] GameObject parentStreet;
-  [SerializeField] float horizontalDistance = 2f;
+  [SerializeField] float horizontalSpeed = 3f;
   [SerializeField] float acceleration = 2f;
 
   int objectPosition = 0;
   float accelerationStatus = 0;
+
+  Vector2 movement;
 
   public static float globalVelocity = 0;
 
@@ -22,30 +24,19 @@ public class VehicleManager : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    globalVelocity += accelerationStatus * acceleration;
+    // Broadcast new velocity to all other vehicles
+    globalVelocity += -movement.y * acceleration;
+
+    // Also update the parent street's position
+    parentStreet.transform.Translate(new Vector3(
+      movement.x * -1 * horizontalSpeed * Time.deltaTime,
+      0,
+      0
+    ), Space.World);
   }
 
-  void OnPressDirection(Vector2 movement) {
+  void OnPressDirection(Vector2 lastMovement) {
     // Change velocity
-    accelerationStatus = -movement.y;
-
-    if (Mathf.Abs(movement.x) == 1) {
-      // Move street left and right
-      if (movement.x > 0) {
-        if (objectPosition == 1) {
-          return;
-        }
-        objectPosition += 1;
-      } else if (movement.x < 0) {
-        if (objectPosition == -1) {
-          return;
-        }
-        objectPosition -= 1;
-      } else {
-        return;
-      }
-
-      parentStreet.transform.Translate(movement.x * -1 * horizontalDistance, 0, 0, Space.World);
-    }
+    movement = lastMovement;
   }
 }
