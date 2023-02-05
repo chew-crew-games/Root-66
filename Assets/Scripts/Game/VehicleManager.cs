@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class VehicleManager : MonoBehaviour {
   public static event Action<int> RecipeScoreUpdate = delegate { };
@@ -113,6 +114,7 @@ public class VehicleManager : MonoBehaviour {
       ),
       spawnLocation.rotation
     );
+    newCar.transform.Find("Text").GetComponent<TMP_Text>().text = $"{totalOrders}";
     Vehicle vehicle = newCar.GetComponent<Vehicle>();
     vehicle.recipe = recipe;
     vehicle.lane = lane;
