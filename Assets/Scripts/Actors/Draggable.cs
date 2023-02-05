@@ -14,6 +14,8 @@ public class Draggable : MonoBehaviour {
   }
 
   void FixedUpdate() {
+    Vector3 currentRotation = transform.localRotation.eulerAngles;
+    transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, currentRotation.z));
     if (isDragging) {
       Vector3 pos = Mouse.current.position.ReadValue();
       rb.velocity = (GetMouseWorldPos(pos) - transform.position) * (1 / Time.deltaTime) * .5f;
