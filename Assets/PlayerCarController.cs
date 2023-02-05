@@ -5,7 +5,11 @@ using UnityEngine;
 public class PlayerCarController : MonoBehaviour {
   [SerializeField] float horizontalSpeed = 2f;
   Vector2 movement;
+
+  Animator animator;
+
   void Start() {
+    animator = GetComponent<Animator>();
     GameInput.PlayerMoveEvent += OnMove;
   }
 
@@ -20,6 +24,15 @@ public class PlayerCarController : MonoBehaviour {
   }
   void OnMove(Vector2 newMovement) {
     movement = newMovement;
+  }
+
+  void OnCollisionEnter(Collision other) {
+    Debug.Log("made it");
+    Debug.Log(other.gameObject.tag);
+    if (other.gameObject.tag == "Vehicle") {
+      Destroy(other.gameObject);
+      animator.Play("Car spin");
+    }
   }
 
 }

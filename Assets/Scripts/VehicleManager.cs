@@ -26,7 +26,8 @@ public class VehicleManager : MonoBehaviour {
     globalVelocity = Mathf.Clamp(
       globalVelocity + -movement.y * acceleration,
       minVelocity,
-    maxVelocity);
+      maxVelocity
+    );
   }
 
   void OnPressDirection(Vector2 lastMovement) {
