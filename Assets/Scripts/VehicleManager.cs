@@ -4,13 +4,9 @@ using UnityEngine;
 public class VehicleManager : MonoBehaviour {
   [SerializeField] List<GameObject> vehicles = new List<GameObject>();
   [SerializeField] GameObject parentStreet;
-  [SerializeField] float horizontalSpeed = 3f;
   [SerializeField] float acceleration = 2f;
   [SerializeField] float minVelocity = -2f;
   [SerializeField] float maxVelocity = -0.01f;
-
-  int objectPosition = 0;
-  float accelerationStatus = 0;
 
   Vector2 movement;
 
