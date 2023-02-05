@@ -393,7 +393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipe: []
   lane: 0
-  relativeVelocity: -5
+  relativeVelocity: -0.2
   actualVelocity: 0
 --- !u!65 &3710146253263480183
 BoxCollider:

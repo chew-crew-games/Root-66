@@ -8,12 +8,13 @@ public class Vehicle : MonoBehaviour {
   public VehicleManager.Lane lane;
 
 
-  [SerializeField] float relativeVelocity;
+  // [SerializeField] float relativeVelocity;
+  [SerializeField] float relativeVelocity = -0.2f;
   [SerializeField] float actualVelocity;
 
 
   void Start() {
-    relativeVelocity = UnityEngine.Random.Range(-0.01f, -0.4f);
+    // relativeVelocity = UnityEngine.Random.Range(-0.01f, -0.4f);
   }
 
   void FixedUpdate() {
