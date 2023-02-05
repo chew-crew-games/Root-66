@@ -3268,6 +3268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8ccf9a60773ea4392dad7a3baf8fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vehicleSpawn: {fileID: 19847033}
 --- !u!65 &1703338267
 BoxCollider:
   m_ObjectHideFlags: 0

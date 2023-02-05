@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class VehicleManager : MonoBehaviour {
@@ -90,6 +91,7 @@ public class VehicleManager : MonoBehaviour {
     Debug.Log("Created new car with recipe: " + string.Join(" ", recipe));
 
     orders.Add(lane, new Order(recipe, newTicket.gameObject));
+    Debug.Log("Added key: " + lane);
 
     GameObject newCar = Instantiate(
       carPrefab,
@@ -107,6 +109,7 @@ public class VehicleManager : MonoBehaviour {
   }
 
   void OnCrashedCar(Lane lane) {
+    Debug.Log(lane);
     Destroy(orders[lane].gameObject);
     orders.Remove(lane);
     orderCount--;
@@ -118,6 +121,7 @@ public class VehicleManager : MonoBehaviour {
     } else {
       RecipeScoreUpdate.Invoke(-5);
     }
+    Debug.Log(lane);
     Destroy(orders[lane].gameObject);
     orders.Remove(lane);
     orderCount--;
