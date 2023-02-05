@@ -8,6 +8,7 @@ public class Ground : MonoBehaviour {
   [SerializeField] Transform ingredientSpawn;
   [SerializeField] Transform blenderSpawn;
   public void OnCollisionEnter(Collision col) {
+    Debug.Log("ground hit");
     if (col.gameObject.tag == "Ingredient") {
       col.transform.position = ingredientSpawn.position;
       col.transform.rotation = ingredientSpawn.rotation;
@@ -15,7 +16,7 @@ public class Ground : MonoBehaviour {
     } else if (col.gameObject.tag == "Blender") {
       col.transform.position = blenderSpawn.position;
       col.transform.rotation = blenderSpawn.rotation;
-      col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+      col.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
     } else {
       Destroy(col.gameObject);
     }
