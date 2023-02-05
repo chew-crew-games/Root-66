@@ -8,6 +8,9 @@ TagManager:
   - Ingredient
   - Carrot Smoothie
   - Carrot
+  - BG
+  - Sweet Potato Smoothie
+  - Taro Smoothie
   layers:
   - Default
   - TransparentFX

@@ -28,14 +28,19 @@ public class TimerBar : MonoBehaviour
         {
             stopTimer = true;
 
+            ResetTimer();
         }
         if (stopTimer == false)
         {
             timeSlider.value = time;
-
+            
         }
+        
 
     }
+    public void ResetTimer()
+    {
+        timeSlider.maxValue = 20;
+    }
 
-   
 }

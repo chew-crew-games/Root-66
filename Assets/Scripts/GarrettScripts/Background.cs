@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
+    public GameObject cubePrefab;
 
-
-    public GameObject CubePrefab;
-
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Vector3 randomSpawnPosition = new Vector3(Random.Range(10, 11), .2f, Random.Range(10,11));
-            Instantiate(CubePrefab, randomSpawnPosition, Quaternion.identity);
-        }
+        StartCoroutine(SpawnObject());
     }
+    IEnumerator SpawnObject()
+    {
+       
+
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(-5, -8), 1, Random.Range(111, 115));
+            Instantiate(cubePrefab, randomSpawnPosition, Quaternion.identity);
+
+        yield return new WaitForSeconds(13f);
+
+    }
+
+  
 }
+
