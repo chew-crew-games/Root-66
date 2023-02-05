@@ -15,6 +15,13 @@ public class PlayerCarController : MonoBehaviour {
 
   // Update is called once per frame
   void FixedUpdate() {
+    if (
+      (movement.x > 0 && transform.position.x > 2)
+      || (movement.x < 0 && transform.position.x < -2)
+    ) {
+      // player is trying to move beyond the road boundary
+      return;
+    }
     // Also update the parent street's position
     transform.Translate(new Vector3(
       movement.x * horizontalSpeed * Time.deltaTime,
