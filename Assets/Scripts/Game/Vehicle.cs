@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
 public class Vehicle : MonoBehaviour {
@@ -25,23 +25,21 @@ public class Vehicle : MonoBehaviour {
   void OnCollisionEnter(Collision col) {
     if (col.transform.tag == "Smoothie") {
       Array.Sort(recipe);
-      string[] smoothieContents = col.transform.GetComponent<Smoothie>().contents;
-      Array.Sort(smoothieContents);
+      var smoothieContents = col.transform.GetComponent<Smoothie>().contents;
+      smoothieContents.Sort();
       bool matches = true;
-      if(smoothieContents.Length == recipe.Length) {
-        for(int x = 0; x < smoothieContents.Length; x++) {
-          if(smoothieContents[x] != recipe[x]) {
+      if (smoothieContents.Count == recipe.Length) {
+        for (int x = 0; x < smoothieContents.Count; x++) {
+          if (smoothieContents[x].name != recipe[x]) {
             matches = false;
           }
         }
-      }
-      else {
+      } else {
         matches = false;
       }
-      if(matches) {
+      if (matches) {
         //logic for score increase
-      }
-      else {
+      } else {
         //logic for health decrease
       }
       // Debug.Log("recipe");

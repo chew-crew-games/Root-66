@@ -29,8 +29,6 @@ public class VehicleManager : MonoBehaviour {
 
   public static float globalVelocity;
 
-  int numberOfTickets = 0;
-
   void Start() {
     GameInput.PlayerMoveEvent += (vector) => OnPressDirection(vector);
     globalVelocity = -2f;
@@ -59,20 +57,18 @@ public class VehicleManager : MonoBehaviour {
       lane = (Lane)lanes.GetValue(random.Next(lanes.Length));
     } while (dict.ContainsKey(lane));
 
-    Debug.Log("Lane: " + lane);
-
     string[] recipe = new string[UnityEngine.Random.Range(1, 3)];
     for (int index = 0; index < recipe.Length; index++) {
       recipe[index] = ingredients[UnityEngine.Random.Range(0, ingredients.Length - 1)];
     }
-    numberOfTickets++;
+    dict.Add(lane, recipe);
+
     Ticket newTicket = Instantiate(ticketPrefab, dashboard.transform.position + new Vector3(0f, 0.95f, 0f), dashboard.transform.rotation);
-    newTicket.transform.name = "Ticket " + numberOfTickets;
+    newTicket.transform.name = "Ticket " + dict.Count;
     newTicket.transform.parent = dashboard.transform;
     newTicket.SetRecipe(recipe);
     Debug.Log("Created new car with recipe: " + string.Join(" ", recipe));
 
-    dict.Add(lane, recipe);
     GameObject newCar = Instantiate(
       carPrefab,
       new Vector3(

@@ -1,30 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
+using System.Linq;
 using UnityEngine;
 
 public class Blender : MonoBehaviour {
   public GameObject smoothie;
-  public string[] contents = new string[0];
+  // public string[] contents = new string[0];
+  [SerializeField] List<Ingredient> contents = new List<Ingredient>();
   public bool isBlending = false;
+  public Transform ingredientSpawn;
+  public string[] contentsRecipe;
 
-  public Dictionary<string, Color> dict = new Dictionary<string, Color>() {
-        {"Carrot", new Color(1f, 0.7f, 0.3f)},
-        {"Taro", new Color(.7f,.5f,1f)},
-        {"Potato", new Color(.5f,.4f,.2f)}
-    };
+  // public List<Ingredient> ingredients = new List<Ingredient>();
+
+  // public Dictionary<string, Color> dict = new Dictionary<string, Color>() {
+  //   {"Carrot", new Color(1f, 0.7f, 0.3f)},
+  //   {"Taro", new Color(.7f,.5f,1f)},
+  //   {"Potato", new Color(.5f,.4f,.2f)}
+  // };
 
   public void OnCollisionEnter(Collision col) {
     if (!isBlending && col.gameObject.tag == "Ingredient") {
-        Array.Resize(ref contents, contents.Length + 1);
-        contents[contents.GetUpperBound(0)] = col.gameObject.name;
-        Destroy(col.transform.parent.gameObject);
-        transform.gameObject.name = "Blender - " + string.Join(", ", contents);
+      contents.Add(col.gameObject.GetComponent<Ingredient>());
+      col.transform.position = ingredientSpawn.position;
+      col.transform.rotation = ingredientSpawn.rotation;
+      col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+      // contents.Add(col.gameObject.GetComponent < IngredientScriptable)
+      // Destroy(col.transform.parent.gameObject);
+      contentsRecipe = contents.Select(ingredient => ingredient.name).ToArray();
+      transform.gameObject.name = "Blender - " + string.Join(", ", contentsRecipe);
     }
   }
 
   public void OnMouseDown() {
-    if (!isBlending && contents.Length > 0) {
+    if (!isBlending && contents.Count > 0) {
       isBlending = true;
       transform.gameObject.name = "Blender - Blending...";
       StartCoroutine(BlendCoroutine());
@@ -33,29 +43,29 @@ public class Blender : MonoBehaviour {
 
   IEnumerator BlendCoroutine() {
     yield return new WaitForSeconds(5);
-    GameObject new_smoothie = Instantiate(smoothie, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+    GameObject new_smoothie = Instantiate(smoothie, ingredientSpawn.position, Quaternion.identity);
     new_smoothie.transform.parent = transform.parent;
-    new_smoothie.transform.Find("Smoothie").GetComponent<SpriteRenderer>().color = AverageColors();
-    new_smoothie.transform.Find("Smoothie").name = "Smoothie - " + string.Join(", ", contents);
-    new_smoothie.transform.Find("Smoothie").GetComponent<Smoothie>().contents = new string[contents.Length];
-    contents.CopyTo(new_smoothie.transform.Find("Smoothie").GetComponent<Smoothie>().contents, 0);
-    contents = new string[0];
+    Smoothie newSmoothieScript = new_smoothie.transform.GetChild(0).GetComponent<Smoothie>();
+    newSmoothieScript.GetComponent<SpriteRenderer>().color = AverageColors(contents);
+    newSmoothieScript.name = "Smoothie - " + string.Join(", ", contentsRecipe);
+    newSmoothieScript.contents = contents;
+    contents.Clear();
     isBlending = false;
     transform.gameObject.name = "Blender";
   }
 
-  public Color AverageColors() {
+  public Color AverageColors(List<Ingredient> ingredients) {
     float r = 0;
     float g = 0;
     float b = 0;
-    for (int i = 0; i < contents.Length; i++) {
-      r += dict[contents[i]].r;
-      g += dict[contents[i]].g;
-      b += dict[contents[i]].b;
+    foreach (Ingredient ingredient in ingredients) {
+      r += ingredient.color.r;
+      g += ingredient.color.g;
+      b += ingredient.color.b;
     }
-    r /= contents.Length;
-    g /= contents.Length;
-    b /= contents.Length;
+    r /= ingredients.Count;
+    g /= ingredients.Count;
+    b /= ingredients.Count;
     return new Color(r, g, b);
   }
 }
