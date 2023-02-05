@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class VehicleManager : MonoBehaviour {
   public static event Action<int> RecipeScoreUpdate = delegate { };
+  public static event Action<int> HealthUpdate = delegate { };
 
   public struct Order {
     public string[] recipe;
@@ -24,10 +25,10 @@ public class VehicleManager : MonoBehaviour {
 
   [SerializeField] List<GameObject> vehicles = new List<GameObject>();
   [SerializeField] float acceleration = 2f;
-  public static float minVelocity = -7f;
+  public static float minVelocity = -20f;
   public static float maxVelocity = 1f;
 
-  public Dictionary<Lane, Order> orders = new Dictionary<Lane, Order>();
+  public static Dictionary<Lane, Order> orders = new Dictionary<Lane, Order>();
 
   string[] ingredients = new string[] { "Potato", "Taro", "Carrot" };
 
@@ -38,7 +39,6 @@ public class VehicleManager : MonoBehaviour {
   [SerializeField] GameObject dashboard;
 
   Vector2 movement;
-  int orderCount;
 
   public static float globalVelocity;
 
@@ -47,6 +47,7 @@ public class VehicleManager : MonoBehaviour {
     globalVelocity = -2f;
     Vehicle.CarDeletedEvent += OnCarDeleted;
     PlayerCarController.CrashedCarEvent += OnCrashedCar;
+    DeathBox.CarMissedEvent += (lane) => OnCarDeleted(lane, false);
     InvokeRepeating("TrySpawnCar", 4, 4);
   }
 
@@ -84,8 +85,7 @@ public class VehicleManager : MonoBehaviour {
         0f
       ),
       dashboard.transform.rotation);
-    orderCount++;
-    newTicket.transform.name = "Ticket #" + orderCount;
+    newTicket.transform.name = "Ticket";
     newTicket.transform.parent = dashboard.transform;
     newTicket.SetRecipe(recipe);
     Debug.Log("Created new car with recipe: " + string.Join(" ", recipe));
@@ -118,7 +118,7 @@ public class VehicleManager : MonoBehaviour {
     if (success) {
       RecipeScoreUpdate.Invoke(10);
     } else {
-      RecipeScoreUpdate.Invoke(-5);
+      HealthUpdate.Invoke(-1);
     }
     Debug.Log(lane);
     Destroy(orders[lane].gameObject);
