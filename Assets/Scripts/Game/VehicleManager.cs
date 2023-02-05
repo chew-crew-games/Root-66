@@ -30,6 +30,9 @@ public class VehicleManager : MonoBehaviour {
 
   public static Dictionary<Lane, Order> orders = new Dictionary<Lane, Order>();
 
+  // please stop touching this i'm going to scream
+  int totalOrders = 0;
+
   string[] ingredients = new string[] { "Potato", "Taro", "Carrot" };
 
   [SerializeField] Transform spawnLocation;
@@ -85,7 +88,8 @@ public class VehicleManager : MonoBehaviour {
         0f
       ),
       dashboard.transform.rotation);
-    newTicket.transform.name = "Ticket";
+    totalOrders++;
+    newTicket.transform.name = "Ticket " + totalOrders;
     newTicket.transform.parent = dashboard.transform;
     newTicket.SetRecipe(recipe);
     Debug.Log("Created new car with recipe: " + string.Join(" ", recipe));
