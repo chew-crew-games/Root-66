@@ -10,8 +10,8 @@ public class GameController : MonoBehaviour {
 
   // Start is called before the first frame update
   void Start() {
-    PlayerCarController.CrashedCarEvent += () => IncrementHealth(-1);
-    Vehicle.RecipeScoreUpdate += IncrementPoints;
+    PlayerCarController.CrashedCarEvent += (_) => IncrementHealth(-1);
+    VehicleManager.RecipeScoreUpdate += IncrementPoints;
     UpdateText();
   }
 

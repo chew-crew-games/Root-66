@@ -2,9 +2,11 @@ using System;
 using UnityEngine;
 
 public class Vehicle : MonoBehaviour {
-  public string[] recipe;
+  public static event Action<VehicleManager.Lane, bool> CarDeletedEvent = delegate { };
 
-  public static event Action<int> RecipeScoreUpdate = delegate { };
+  public string[] recipe;
+  public VehicleManager.Lane lane;
+
 
   [SerializeField] float relativeVelocity;
   [SerializeField] float actualVelocity;
@@ -39,13 +41,7 @@ public class Vehicle : MonoBehaviour {
       } else {
         matches = false;
       }
-      if (matches) {
-        Debug.Log("Success!");
-        RecipeScoreUpdate.Invoke(10);
-      } else {
-        Debug.Log("Wrong recipe!");
-        RecipeScoreUpdate.Invoke(-5);
-      }
+      CarDeletedEvent.Invoke(lane, matches);
       Destroy(col.gameObject);
       Destroy(gameObject);
       Debug.Log("destroyed");

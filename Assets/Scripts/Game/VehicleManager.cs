@@ -3,6 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class VehicleManager : MonoBehaviour {
+  public static event Action<int> RecipeScoreUpdate = delegate { };
+
+  public struct Order {
+    public string[] recipe;
+    public GameObject gameObject;
+
+    public Order(string[] newRecipe, GameObject newGameObject) {
+      recipe = newRecipe;
+      gameObject = newGameObject;
+    }
+  }
+
   public enum Lane {
     Left = -1,
     Middle = 1,
@@ -14,7 +26,7 @@ public class VehicleManager : MonoBehaviour {
   public static float minVelocity = -7f;
   public static float maxVelocity = 1f;
 
-  public Dictionary<Lane, string[]> dict = new Dictionary<Lane, string[]>();
+  public Dictionary<Lane, Order> orders = new Dictionary<Lane, Order>();
 
   string[] ingredients = new string[] { "Potato", "Taro", "Carrot" };
 
@@ -25,13 +37,15 @@ public class VehicleManager : MonoBehaviour {
   [SerializeField] GameObject dashboard;
 
   Vector2 movement;
+  int orderCount;
 
   public static float globalVelocity;
 
   void Start() {
     GameInput.PlayerMoveEvent += (vector) => OnPressDirection(vector);
     globalVelocity = -2f;
-
+    Vehicle.CarDeletedEvent += OnCarDeleted;
+    PlayerCarController.CrashedCarEvent += OnCrashedCar;
     InvokeRepeating("TrySpawnCar", 4, 4);
   }
 
@@ -45,7 +59,7 @@ public class VehicleManager : MonoBehaviour {
   }
 
   void TrySpawnCar() {
-    if (dict.Count >= 2) {
+    if (orders.Count >= 2) {
       return;
     }
 
@@ -54,13 +68,12 @@ public class VehicleManager : MonoBehaviour {
     Array lanes = Enum.GetValues(typeof(Lane));
     do {
       lane = (Lane)lanes.GetValue(random.Next(lanes.Length));
-    } while (dict.ContainsKey(lane));
+    } while (orders.ContainsKey(lane));
 
     string[] recipe = new string[UnityEngine.Random.Range(1, 3)];
     for (int index = 0; index < recipe.Length; index++) {
       recipe[index] = ingredients[UnityEngine.Random.Range(0, ingredients.Length - 1)];
     }
-    dict.Add(lane, recipe);
 
     Ticket newTicket = Instantiate(
       ticketPrefab,
@@ -70,10 +83,13 @@ public class VehicleManager : MonoBehaviour {
         0f
       ),
       dashboard.transform.rotation);
-    newTicket.transform.name = "Ticket " + dict.Count;
+    orderCount++;
+    newTicket.transform.name = "Ticket #" + orderCount;
     newTicket.transform.parent = dashboard.transform;
     newTicket.SetRecipe(recipe);
     Debug.Log("Created new car with recipe: " + string.Join(" ", recipe));
+
+    orders.Add(lane, new Order(recipe, newTicket.gameObject));
 
     GameObject newCar = Instantiate(
       carPrefab,
@@ -84,8 +100,27 @@ public class VehicleManager : MonoBehaviour {
       ),
       spawnLocation.rotation
     );
-    newCar.GetComponent<Vehicle>().recipe = recipe;
+    Vehicle vehicle = newCar.GetComponent<Vehicle>();
+    vehicle.recipe = recipe;
+    vehicle.lane = lane;
     newCar.transform.parent = carParent;
+  }
+
+  void OnCrashedCar(Lane lane) {
+    Destroy(orders[lane].gameObject);
+    orders.Remove(lane);
+    orderCount--;
+  }
+
+  void OnCarDeleted(Lane lane, bool success) {
+    if (success) {
+      RecipeScoreUpdate.Invoke(10);
+    } else {
+      RecipeScoreUpdate.Invoke(-5);
+    }
+    Destroy(orders[lane].gameObject);
+    orders.Remove(lane);
+    orderCount--;
   }
 
   void OnPressDirection(Vector2 lastMovement) {

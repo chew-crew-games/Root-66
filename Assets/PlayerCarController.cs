@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 public class PlayerCarController : MonoBehaviour {
-  public static event Action CrashedCarEvent = delegate { };
+  public static event Action<VehicleManager.Lane> CrashedCarEvent = delegate { };
 
   [SerializeField] float horizontalSpeed = 2f;
   Vector2 movement;
@@ -38,8 +38,9 @@ public class PlayerCarController : MonoBehaviour {
     if (other.gameObject.tag != "Vehicle") {
       return;
     }
+    VehicleManager.Lane lane = other.gameObject.GetComponent<Vehicle>().lane;
+    CrashedCarEvent.Invoke(lane);
     Destroy(other.gameObject);
     animator.Play("Car spin");
-    CrashedCarEvent.Invoke();
   }
 }

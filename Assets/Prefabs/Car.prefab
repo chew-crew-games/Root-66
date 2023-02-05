@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recipe: []
+  lane: 0
   relativeVelocity: -5
   actualVelocity: 0
 --- !u!65 &3710146253263480183
@@ -260,5 +261,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3275168, y: 2.6343074, z: 3.8069959}
-  m_Center: {x: -0.9603785, y: 1.4362144, z: -0.74978375}
+  m_Size: {x: 1.3275168, y: 7.2338924, z: 10.981164}
+  m_Center: {x: -0.9603785, y: 1.3839207, z: -2.6192193}
