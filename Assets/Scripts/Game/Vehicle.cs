@@ -1,10 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Vehicle : MonoBehaviour {
   public string[] recipe;
+
+  public static event Action<int> RecipeScoreUpdate = delegate { };
 
   [SerializeField] float relativeVelocity;
   [SerializeField] float actualVelocity;
@@ -22,11 +22,13 @@ public class Vehicle : MonoBehaviour {
     ) * Time.deltaTime);
   }
 
-  void OnCollisionEnter(Collision col) {
+  void OnTriggerEnter(Collider col) {
     if (col.transform.tag == "Smoothie") {
       Array.Sort(recipe);
+      LogUtils.PrintArray(recipe);
       var smoothieContents = col.transform.GetComponent<Smoothie>().contents;
-      smoothieContents.Sort();
+      smoothieContents.Sort((ing1, ing2) => ing1.name.CompareTo(ing2.name));
+      LogUtils.PrintList(smoothieContents);
       bool matches = true;
       if (smoothieContents.Count == recipe.Length) {
         for (int x = 0; x < smoothieContents.Count; x++) {
@@ -38,18 +40,15 @@ public class Vehicle : MonoBehaviour {
         matches = false;
       }
       if (matches) {
-        //logic for score increase
+        Debug.Log("Success!");
+        RecipeScoreUpdate.Invoke(10);
       } else {
-        //logic for health decrease
+        Debug.Log("Wrong recipe!");
+        RecipeScoreUpdate.Invoke(-5);
       }
-      // Debug.Log("recipe");
-      // foreach (string ingredient in recipe) {
-      //   Debug.Log(ingredient);
-      // }
-      // Debug.Log("smoothie");
-      // foreach (string ingredient in smoothieContents) {
-      //   Debug.Log(ingredient);
-      // }
+      Destroy(col.gameObject);
+      Destroy(gameObject);
+      Debug.Log("destroyed");
     }
   }
 }

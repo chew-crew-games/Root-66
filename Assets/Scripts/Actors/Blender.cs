@@ -23,6 +23,7 @@ public class Blender : MonoBehaviour {
   public void OnCollisionEnter(Collision col) {
     if (!isBlending && col.gameObject.tag == "Ingredient") {
       contents.Add(col.gameObject.GetComponent<Ingredient>());
+      col.gameObject.GetComponent<Draggable>().isDragging = false;
       col.transform.position = ingredientSpawn.position;
       col.transform.rotation = ingredientSpawn.rotation;
       col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -47,8 +48,8 @@ public class Blender : MonoBehaviour {
     new_smoothie.transform.parent = transform.parent;
     Smoothie newSmoothieScript = new_smoothie.transform.GetChild(0).GetComponent<Smoothie>();
     newSmoothieScript.GetComponent<SpriteRenderer>().color = AverageColors(contents);
-    newSmoothieScript.name = "Smoothie - " + string.Join(", ", contentsRecipe);
-    newSmoothieScript.contents = contents;
+    newSmoothieScript.name = string.Join(" ", contentsRecipe) + " Smoothie";
+    newSmoothieScript.contents = new List<Ingredient>(contents);
     contents.Clear();
     isBlending = false;
     transform.gameObject.name = "Blender";

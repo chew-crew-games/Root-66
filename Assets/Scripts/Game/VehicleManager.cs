@@ -63,7 +63,14 @@ public class VehicleManager : MonoBehaviour {
     }
     dict.Add(lane, recipe);
 
-    Ticket newTicket = Instantiate(ticketPrefab, dashboard.transform.position + new Vector3(0f, 0.95f, 0f), dashboard.transform.rotation);
+    Ticket newTicket = Instantiate(
+      ticketPrefab,
+      dashboard.transform.position + new Vector3(
+        UnityEngine.Random.Range(-.3f, .3f),
+        0.95f,
+        0f
+      ),
+      dashboard.transform.rotation);
     newTicket.transform.name = "Ticket " + dict.Count;
     newTicket.transform.parent = dashboard.transform;
     newTicket.SetRecipe(recipe);

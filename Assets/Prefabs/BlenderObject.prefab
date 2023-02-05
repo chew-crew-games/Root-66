@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2824224666121597367}
   m_Layer: 7
   m_Name: Blender
-  m_TagString: Untagged
+  m_TagString: Blender
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cf84618a4d541948a70e0ec0bb8072d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDragging: 0
 --- !u!114 &2824224666121597361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +117,7 @@ MonoBehaviour:
   contents: []
   isBlending: 0
   ingredientSpawn: {fileID: 0}
+  contentsRecipe: []
 --- !u!54 &2824224666121597364
 Rigidbody:
   m_ObjectHideFlags: 0

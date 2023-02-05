@@ -1,24 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using TMPro;
 
 public class PlayerCarController : MonoBehaviour {
+  public static event Action CrashedCarEvent = delegate { };
+
   [SerializeField] float horizontalSpeed = 2f;
   Vector2 movement;
 
   Animator animator;
 
-  public static int currentScore = 0;
-  public static int health = 3;
-  [SerializeField] TMP_Text scoreComponent;
-  [SerializeField] TMP_Text healthComponent;
-
   void Start() {
     animator = GetComponent<Animator>();
     GameInput.PlayerMoveEvent += OnMove;
-    healthComponent.text = $"Health: {health}";
-    scoreComponent.text = $"Score: {currentScore}";
   }
 
   // Update is called once per frame
@@ -47,18 +40,6 @@ public class PlayerCarController : MonoBehaviour {
     }
     Destroy(other.gameObject);
     animator.Play("Car spin");
-    AddHealth(-1);
+    CrashedCarEvent.Invoke();
   }
-
-  public void AddPoints(int earnedPoints)
-    {
-        currentScore += earnedPoints;
-        scoreComponent.text = $"Score: {currentScore}";
-    }
-
-  public void AddHealth(int healthDiff)
-    {
-        health += healthDiff;
-        healthComponent.text = $"Health: {health}";
-    }
 }

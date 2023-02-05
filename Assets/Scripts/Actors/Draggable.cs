@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class Draggable : MonoBehaviour {
   public static float throwForce = .5f;
 
-  bool isDragging;
+  public bool isDragging;
   bool isTouching;
   Rigidbody rb;
 
@@ -14,9 +14,9 @@ public class Draggable : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    Vector3 pos = Mouse.current.position.ReadValue();
     if (isDragging) {
-      rb.velocity = (GetMouseWorldPos(pos) - transform.position) * (1/Time.deltaTime) * .5f;
+      Vector3 pos = Mouse.current.position.ReadValue();
+      rb.velocity = (GetMouseWorldPos(pos) - transform.position) * (1 / Time.deltaTime) * .5f;
     }
   }
 
@@ -26,7 +26,7 @@ public class Draggable : MonoBehaviour {
   }
 
   void OnMouseUp() {
-    if(!isTouching) {
+    if (!isTouching) {
       transform.parent.Find("Text").gameObject.SetActive(false);
     }
     isDragging = false;
