@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour {
     currentHealth += healthDiff;
     healthComponent.text = $"Health: {currentHealth}";
     UpdateText();
-    if (currentHealth < 0) {
+    if (currentHealth < 1) {
       GameOver();
     }
   }
