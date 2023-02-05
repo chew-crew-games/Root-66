@@ -12,6 +12,9 @@ public class Blender : MonoBehaviour {
   public Transform ingredientSpawn;
   public string[] contentsRecipe;
 
+
+    public AudioClip[] sounds;
+    public AudioSource source;
   // public List<Ingredient> ingredients = new List<Ingredient>();
 
   // public Dictionary<string, Color> dict = new Dictionary<string, Color>() {
@@ -38,6 +41,8 @@ public class Blender : MonoBehaviour {
     if (!isBlending && contents.Count > 0) {
       isBlending = true;
       transform.gameObject.name = "Blender - Blending...";
+            source.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
+            source.Play();
       StartCoroutine(BlendCoroutine());
     }
   }
