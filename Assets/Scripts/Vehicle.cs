@@ -1,6 +1,8 @@
 using UnityEngine;
 
 public class Vehicle : MonoBehaviour {
+  public string[] recipe;
+
   [SerializeField] float relativeVelocity;
   [SerializeField] float actualVelocity;
 
