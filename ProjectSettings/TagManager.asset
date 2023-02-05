@@ -11,6 +11,8 @@ TagManager:
   - BG
   - Sweet Potato Smoothie
   - Taro Smoothie
+  - Vehicle
+  - Smoothie
   layers:
   - Default
   - TransparentFX
