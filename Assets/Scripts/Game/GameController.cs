@@ -41,6 +41,7 @@ public class GameController : MonoBehaviour {
 
   void GameOver() {
     gameOverObject.SetActive(true);
+    gameOverObject.transform.GetChild(1).GetComponent<TMP_Text>().text = "Score: $" + currentScore;
     Time.timeScale = 0;
   }
 
