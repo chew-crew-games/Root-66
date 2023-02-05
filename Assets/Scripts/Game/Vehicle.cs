@@ -11,8 +11,8 @@ public class Vehicle : MonoBehaviour {
   [SerializeField] float relativeVelocity;
   [SerializeField] float actualVelocity;
 
-    
-    void Start() {
+
+  void Start() {
     relativeVelocity = UnityEngine.Random.Range(-0.01f, -0.4f);
   }
 
@@ -43,8 +43,7 @@ public class Vehicle : MonoBehaviour {
         matches = false;
       }
       CarDeletedEvent.Invoke(lane, matches);
-            
-            Destroy(col.gameObject);
+      Destroy(col.gameObject);
       Destroy(gameObject);
       Debug.Log("destroyed");
     }

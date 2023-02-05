@@ -13,7 +13,6 @@ public class GameController : MonoBehaviour {
   // Start is called before the first frame update
   void Start() {
     gameOverObject.SetActive(false);
-    PlayerCarController.CrashedCarEvent += (_) => IncrementHealth(-1);
     VehicleManager.RecipeScoreUpdate += IncrementPoints;
     VehicleManager.HealthUpdate += IncrementHealth;
     Ground.LitteringFine += IncrementHealth;
@@ -27,24 +26,21 @@ public class GameController : MonoBehaviour {
     currentScore += earnedPoints;
     scoreComponent.text = $"Score: {currentScore}";
     UpdateText();
-    if (currentScore < 0) {
-      GameOver();
-    }
   }
 
   public void IncrementHealth(int healthDiff) {
     currentHealth += healthDiff;
     healthComponent.text = $"Health: {currentHealth}";
     UpdateText();
-    if (currentHealth < 1) {
-      GameOver();
-    }
   }
 
   void UpdateText() {
+    if (currentHealth < 1 || currentScore < 0) {
+      GameOver();
+    }
     healthComponent.text = $"Health: {currentHealth}";
     scoreComponent.text = $"Score: ${currentScore}";
-    speedComponent.text = $"Speed: {(int)(70 + VehicleManager.globalVelocity*-1)} mph";
+    speedComponent.text = $"Speed: {(int)(70 + VehicleManager.globalVelocity * -1)} mph";
   }
 
   void GameOver() {
