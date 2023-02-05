@@ -17,15 +17,19 @@ public class VehicleManager : MonoBehaviour {
 
   public Dictionary<Lane, string[]> dict = new Dictionary<Lane, string[]>();
 
-  string[] ingredients = new string[] { "potato", "taro", "carrot" };
+  string[] ingredients = new string[] { "Potato", "Taro", "Carrot" };
 
   [SerializeField] Transform spawnLocation;
   [SerializeField] Transform carParent;
   [SerializeField] GameObject carPrefab;
+  [SerializeField] Ticket ticketPrefab;
+  [SerializeField] GameObject dashboard;
 
   Vector2 movement;
 
   public static float globalVelocity;
+
+  int numberOfTickets = 0;
 
   void Start() {
     GameInput.PlayerMoveEvent += (vector) => OnPressDirection(vector);
@@ -61,6 +65,11 @@ public class VehicleManager : MonoBehaviour {
     for (int index = 0; index < recipe.Length; index++) {
       recipe[index] = ingredients[UnityEngine.Random.Range(0, ingredients.Length - 1)];
     }
+    numberOfTickets++;
+    Ticket newTicket = Instantiate(ticketPrefab, dashboard.transform.position + new Vector3(0f, 0.95f, 0f), dashboard.transform.rotation);
+    newTicket.transform.name = "Ticket " + numberOfTickets;
+    newTicket.transform.parent = dashboard.transform;
+    newTicket.SetRecipe(recipe);
     Debug.Log("Created new car with recipe: " + string.Join(" ", recipe));
 
     dict.Add(lane, recipe);

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Draggable : MonoBehaviour {
-  public static float throwForce = 100f;
+  public static float throwForce = .5f;
 
   bool isDragging;
   bool isTouching;
@@ -10,30 +10,18 @@ public class Draggable : MonoBehaviour {
 
   void Start() {
     rb = GetComponent<Rigidbody>();
+    rb.maxAngularVelocity = 1f;
   }
 
   void FixedUpdate() {
+    Vector3 pos = Mouse.current.position.ReadValue();
     if (isDragging) {
-      Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue());
-      // if (pos.x < -13.5f) {
-      //   pos.x = -13.5f;
-      // }
-      // if (pos.x > 13.5f) {
-      //   pos.x = 13.5f;
-      // }
-      // if (pos.y < -5.5f) {
-      //   pos.y = -5.5f;
-      // }
-      // if (pos.y > 5.5f) {
-      //   pos.y = 5.5f;
-      // }
-      rb.MovePosition(transform.position + (pos - transform.position) * Time.deltaTime * 10);
+      rb.velocity = (GetMouseWorldPos(pos) - transform.position) * (1/Time.deltaTime) * .5f;
     }
   }
 
   void OnMouseDown() {
-    rb.velocity = Vector3.zero;
-    rb.isKinematic = true;
+    rb.angularVelocity = Vector3.zero;
     isDragging = true;
   }
 
@@ -42,7 +30,6 @@ public class Draggable : MonoBehaviour {
       transform.parent.Find("Text").gameObject.SetActive(false);
     }
     isDragging = false;
-    rb.isKinematic = false;
     Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue()) - transform.position;
     rb.AddForce((pos - transform.position) * throwForce);
 
