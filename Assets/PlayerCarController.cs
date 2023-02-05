@@ -34,12 +34,10 @@ public class PlayerCarController : MonoBehaviour {
   }
 
   void OnCollisionEnter(Collision other) {
-    Debug.Log("made it");
-    Debug.Log(other.gameObject.tag);
-    if (other.gameObject.tag == "Vehicle") {
-      Destroy(other.gameObject);
-      animator.Play("Car spin");
+    if (other.gameObject.tag != "Vehicle") {
+      return;
     }
+    Destroy(other.gameObject);
+    animator.Play("Car spin");
   }
-
 }

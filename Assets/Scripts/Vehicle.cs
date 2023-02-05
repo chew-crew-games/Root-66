@@ -14,8 +14,8 @@ public class Vehicle : MonoBehaviour {
     actualVelocity = relativeVelocity + VehicleManager.globalVelocity;
     transform.Translate(new Vector3(
       0,
-      actualVelocity,
-      0
+      0,
+      actualVelocity
     ) * Time.deltaTime);
   }
 }
