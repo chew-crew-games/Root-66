@@ -1,47 +1,63 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class Draggable : MonoBehaviour {
-  [SerializeField] public static float throwForce = 50f;
+  public static float throwForce = 100f;
 
   bool isDragging;
+  bool isTouching;
   Rigidbody rb;
 
-  public void Start() {
+  void Start() {
     rb = GetComponent<Rigidbody>();
   }
 
   void FixedUpdate() {
     if (isDragging) {
       Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue());
-      if (pos.x < -13.5f) {
-        pos.x = -13.5f;
-      }
-      if (pos.x > 13.5f) {
-        pos.x = 13.5f;
-      }
-      if (pos.y < -5.5f) {
-        pos.y = -5.5f;
-      }
-      if (pos.y > 5.5f) {
-        pos.y = 5.5f;
-      }
+      // if (pos.x < -13.5f) {
+      //   pos.x = -13.5f;
+      // }
+      // if (pos.x > 13.5f) {
+      //   pos.x = 13.5f;
+      // }
+      // if (pos.y < -5.5f) {
+      //   pos.y = -5.5f;
+      // }
+      // if (pos.y > 5.5f) {
+      //   pos.y = 5.5f;
+      // }
       rb.MovePosition(transform.position + (pos - transform.position) * Time.deltaTime * 10);
     }
   }
 
-  public void OnMouseDown() {
+  void OnMouseDown() {
     rb.velocity = Vector3.zero;
     rb.isKinematic = true;
     isDragging = true;
   }
 
-  public void OnMouseUp() {
+  void OnMouseUp() {
+    if(!isTouching) {
+      transform.parent.Find("Text").gameObject.SetActive(false);
+    }
     isDragging = false;
     rb.isKinematic = false;
     Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue()) - transform.position;
-    rb.AddForce((pos - transform.position)* throwForce);
+    rb.AddForce((pos - transform.position) * throwForce);
+
+  }
+
+  void OnMouseEnter() {
+    transform.parent.Find("Text").gameObject.SetActive(true);
+    isTouching = true;
+  }
+
+  void OnMouseExit() {
+    if (!isDragging) {
+      transform.parent.Find("Text").gameObject.SetActive(false);
+    }
+    isTouching = false;
   }
 
   Vector3 GetMouseWorldPos(Vector2 pointerPosition) {

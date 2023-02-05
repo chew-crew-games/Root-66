@@ -8,33 +8,35 @@ public class Blender : MonoBehaviour {
   public bool isBlending = false;
 
   public Dictionary<string, Color> dict = new Dictionary<string, Color>() {
-        {"carrot", new Color(1f, 0.7f, 0.3f)},
-        {"taro", new Color(.7f,.5f,1f)},
-        {"potato", new Color(.5f,.4f,.2f)}
+        {"Carrot", new Color(1f, 0.7f, 0.3f)},
+        {"Taro", new Color(.7f,.5f,1f)},
+        {"Potato", new Color(.5f,.4f,.2f)}
     };
 
-    public void OnCollisionEnter(Collision col) {
-        if (!isBlending && col.gameObject.tag == "Ingredient") {
-            contents.Add(col.gameObject.name);
-            Destroy(col.gameObject);
-            Debug.Log(string.Join(",",contents));
-        }
+  public void OnCollisionEnter(Collision col) {
+    if (!isBlending && col.gameObject.tag == "Ingredient") {
+      contents.Add(col.gameObject.name);
+      Destroy(col.transform.parent.gameObject);
+      transform.gameObject.name = "Blender - " + string.Join(", ", contents);
     }
+  }
 
   public void OnMouseDown() {
     if (!isBlending && contents.Count > 0) {
       isBlending = true;
+      transform.gameObject.name = "Blender - Blending...";
       StartCoroutine(BlendCoroutine());
     }
   }
 
   IEnumerator BlendCoroutine() {
-    Debug.Log("blending...");
     yield return new WaitForSeconds(5);
     GameObject new_smoothie = Instantiate(smoothie, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-    new_smoothie.GetComponent<SpriteRenderer>().color = AverageColors();
+    new_smoothie.transform.Find("Smoothie").GetComponent<SpriteRenderer>().color = AverageColors();
+    new_smoothie.transform.Find("Smoothie").name = "Smoothie - " + string.Join(", ", contents);
     contents = new List<string>();
     isBlending = false;
+    transform.gameObject.name = "Blender";
   }
 
   public Color AverageColors() {
