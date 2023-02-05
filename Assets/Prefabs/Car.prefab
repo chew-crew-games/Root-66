@@ -375,6 +375,7 @@ Transform:
   - {fileID: 7386466316389177954}
   - {fileID: 1732061393950751576}
   - {fileID: 647810608073960419}
+  - {fileID: 1771346027202297194}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -394,13 +395,6 @@ MonoBehaviour:
   lane: 0
   relativeVelocity: -5
   actualVelocity: 0
-  sounds:
-  - {fileID: 8300000, guid: 4cc456f6b73a46e4e8666cc5a6edaaea, type: 3}
-  - {fileID: 8300000, guid: ac31b49db8d1d2e49ad2355d33cb249d, type: 3}
-  - {fileID: 8300000, guid: be293393be079494f8c17e3e4cc29d42, type: 3}
-  - {fileID: 8300000, guid: c34d05a3dcf635a40993dfbb2fbb8195, type: 3}
-  - {fileID: 8300000, guid: 657271a6dac40684b92c98a805ea86b1, type: 3}
-  source: {fileID: 0}
 --- !u!65 &3710146253263480183
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -413,7 +407,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.62682724, y: 0.6969231, z: 0.17122579}
-  m_Center: {x: -1.0629458, y: 0.58992386, z: -0.82422435}
+  m_Center: {x: 0, y: 0.68, z: 0}
 --- !u!54 &3710146253263480136
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -442,7 +436,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.3275168, y: 7.2338924, z: 10.981164}
-  m_Center: {x: -0.9603785, y: 1.3839207, z: -2.6192193}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7030240200292319444
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,5 +466,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3710146253263480181}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

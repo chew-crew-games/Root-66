@@ -20,6 +20,7 @@ public class Ground : MonoBehaviour {
       col.transform.rotation = blenderSpawn.rotation;
       col.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
     } else {
+      Debug.Log("Destroying: " + col.gameObject.name);
       Destroy(col.gameObject);
     }
     LitteringFine.Invoke(-1);

@@ -11,6 +11,8 @@ public class DeathBox : MonoBehaviour {
     if (col.gameObject.tag == "Vehicle") {
       CarMissedEvent.Invoke(col.gameObject.GetComponent<Vehicle>().lane);
     }
+    Debug.Log("Destroying: " + col.gameObject.name);
+
     Destroy(col.gameObject);
   }
 }
