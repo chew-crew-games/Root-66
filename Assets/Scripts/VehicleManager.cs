@@ -6,7 +6,7 @@ public class VehicleManager : MonoBehaviour {
   [SerializeField] GameObject parentStreet;
   [SerializeField] float acceleration = 2f;
   [SerializeField] public static float minVelocity = -2f;
-  [SerializeField] public static float maxVelocity = -0.01f;
+  [SerializeField] public static float maxVelocity = 1f;
 
   Vector2 movement;
 
