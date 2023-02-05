@@ -5,6 +5,7 @@ public class Draggable : MonoBehaviour {
   public static float throwForce = 100f;
 
   bool isDragging;
+  bool isTouching;
   Rigidbody rb;
 
   void Start() {
@@ -37,7 +38,9 @@ public class Draggable : MonoBehaviour {
   }
 
   void OnMouseUp() {
-    transform.parent.Find("Text").gameObject.SetActive(false);
+    if(!isTouching) {
+      transform.parent.Find("Text").gameObject.SetActive(false);
+    }
     isDragging = false;
     rb.isKinematic = false;
     Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue()) - transform.position;
@@ -47,12 +50,14 @@ public class Draggable : MonoBehaviour {
 
   void OnMouseEnter() {
     transform.parent.Find("Text").gameObject.SetActive(true);
+    isTouching = true;
   }
 
   void OnMouseExit() {
     if (!isDragging) {
       transform.parent.Find("Text").gameObject.SetActive(false);
     }
+    isTouching = false;
   }
 
   Vector3 GetMouseWorldPos(Vector2 pointerPosition) {
