@@ -10,7 +10,7 @@ public class DeathBox : MonoBehaviour {
   void OnCollisionEnter(Collision col) {
     if (col.gameObject.tag == "Vehicle") {
       CarMissedEvent.Invoke(col.gameObject.GetComponent<Vehicle>().lane);
-      Destroy(col.gameObject);
     }
+    Destroy(col.gameObject);
   }
 }

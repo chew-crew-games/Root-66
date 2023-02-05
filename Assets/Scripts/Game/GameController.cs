@@ -16,13 +16,16 @@ public class GameController : MonoBehaviour {
     VehicleManager.RecipeScoreUpdate += IncrementPoints;
     VehicleManager.HealthUpdate += IncrementHealth;
     UpdateText();
-    Ground.LitteringFine += IncrementPoints;
+    Ground.LitteringFine += IncrementHealth;
   }
 
   public void IncrementPoints(int earnedPoints) {
     currentScore += earnedPoints;
     scoreComponent.text = $"Score: {currentScore}";
     UpdateText();
+    if (currentScore < 0) {
+      GameOver();
+    }
   }
 
   public void IncrementHealth(int healthDiff) {

@@ -22,6 +22,6 @@ public class Ground : MonoBehaviour {
     } else {
       Destroy(col.gameObject);
     }
-    LitteringFine.Invoke(-2);
+    LitteringFine.Invoke(-1);
   }
 }
