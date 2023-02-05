@@ -7,7 +7,6 @@ public class Vehicle : MonoBehaviour {
   public string[] recipe;
   public VehicleManager.Lane lane;
 
-
   // [SerializeField] float relativeVelocity;
   [SerializeField] float relativeVelocity = -0.2f;
   [SerializeField] float actualVelocity;

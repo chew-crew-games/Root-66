@@ -8,7 +8,7 @@ public class Ground : MonoBehaviour {
   [SerializeField] Transform ingredientSpawn;
   [SerializeField] Transform blenderSpawn;
   public void OnCollisionEnter(Collision col) {
-
+    if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Obstacle") return;
     if (col.gameObject.tag == "Ingredient") {
       Debug.Log("Respawning object: " + col.gameObject.name);
       col.transform.position = ingredientSpawn.position;
