@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class VehicleManager : MonoBehaviour {
   public static event Action<int> RecipeScoreUpdate = delegate { };
+
   public static event Action<int> HealthUpdate = delegate { };
 
-  public struct Order {
+
+    public AudioClip[] sounds;
+    public AudioSource source;
+    public struct Order {
+
     public string[] recipe;
     public GameObject gameObject;
 
-    public Order(string[] newRecipe, GameObject newGameObject) {
+        
+        public Order(string[] newRecipe, GameObject newGameObject) {
       recipe = newRecipe;
       gameObject = newGameObject;
     }
@@ -93,8 +99,9 @@ public class VehicleManager : MonoBehaviour {
     newTicket.transform.parent = dashboard.transform;
     newTicket.SetRecipe(recipe);
     Debug.Log("Created new car with recipe: " + string.Join(" ", recipe));
-
-    orders.Add(lane, new Order(recipe, newTicket.gameObject));
+        source.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
+        source.Play();
+        orders.Add(lane, new Order(recipe, newTicket.gameObject));
     Debug.Log("Added key: " + lane);
 
     GameObject newCar = Instantiate(

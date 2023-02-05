@@ -9,9 +9,15 @@ public class PlayerCarController : MonoBehaviour {
 
   Animator animator;
 
+
   DashboardItemsController dic;
 
-  void Start() {
+  
+
+    public AudioClip[] sounds;
+    public AudioSource source;
+    void Start() {
+
     animator = GetComponent<Animator>();
     dic = transform.Find("Dashboard").Find("Items").GetComponent<DashboardItemsController>();
     GameInput.PlayerMoveEvent += OnMove;
@@ -44,7 +50,13 @@ public class PlayerCarController : MonoBehaviour {
     VehicleManager.Lane lane = other.gameObject.GetComponent<Vehicle>().lane;
     CrashedCarEvent.Invoke(lane);
     Destroy(other.gameObject);
+
     animator.Play("Car spin");
     dic.GenerateForces();
+
+        source.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
+        source.Play();
+        animator.Play("Car spin");
+
   }
 }
