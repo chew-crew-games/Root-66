@@ -17,13 +17,20 @@ public class Ticket : MonoBehaviour
         text = transform.Find("Text").GetComponent<TMP_Text>();
         rb = GetComponent<Rigidbody>();
         text.text = FormatTicket();
-        rb.maxAngularVelocity = 1f;
+        rb.maxAngularVelocity = 0.1f;
     }
 
     void FixedUpdate() {
         Vector3 pos = Mouse.current.position.ReadValue();
         if (isDragging) {
         rb.velocity = (GetMouseWorldPos(pos) - transform.position) * (1/Time.deltaTime) * .5f;
+        }
+        Vector3 currentRotation = transform.localRotation.eulerAngles;
+        Debug.Log(currentRotation.z);
+        if (currentRotation.z < -20f || currentRotation.z > 20f) {
+            currentRotation.z = Mathf.Clamp(currentRotation.z, -20f, 20f);
+            // rb.angularVelocity = Vector3.zero;
+            transform.localRotation = Quaternion.Euler(currentRotation);
         }
     }
 

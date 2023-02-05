@@ -112,7 +112,6 @@ public class VehicleManager : MonoBehaviour {
     Debug.Log(lane);
     Destroy(orders[lane].gameObject);
     orders.Remove(lane);
-    orderCount--;
   }
 
   void OnCarDeleted(Lane lane, bool success) {
@@ -124,7 +123,6 @@ public class VehicleManager : MonoBehaviour {
     Debug.Log(lane);
     Destroy(orders[lane].gameObject);
     orders.Remove(lane);
-    orderCount--;
   }
 
   void OnPressDirection(Vector2 lastMovement) {

@@ -9,8 +9,11 @@ public class PlayerCarController : MonoBehaviour {
 
   Animator animator;
 
+  DashboardItemsController dic;
+
   void Start() {
     animator = GetComponent<Animator>();
+    dic = transform.Find("Dashboard").Find("Items").GetComponent<DashboardItemsController>();
     GameInput.PlayerMoveEvent += OnMove;
   }
 
@@ -42,5 +45,6 @@ public class PlayerCarController : MonoBehaviour {
     CrashedCarEvent.Invoke(lane);
     Destroy(other.gameObject);
     animator.Play("Car spin");
+    dic.GenerateForces();
   }
 }
