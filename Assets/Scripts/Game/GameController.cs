@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -53,6 +54,7 @@ public class GameController : MonoBehaviour {
     Time.timeScale = 1;
     currentHealth = 3;
     currentScore = 0;
-    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    VehicleManager.orders = new Dictionary<VehicleManager.Lane, VehicleManager.Order>();
+    SceneManager.LoadScene("StartMenu");
   }
 }
