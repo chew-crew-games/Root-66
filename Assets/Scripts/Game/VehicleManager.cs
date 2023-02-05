@@ -100,8 +100,8 @@ public class VehicleManager : MonoBehaviour {
     newTicket.transform.parent = dashboard.transform;
     newTicket.SetRecipe(recipe);
     Debug.Log("Created new car with recipe: " + string.Join(" ", recipe));
-    // source.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
-    // source.Play();
+     source.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
+     source.Play();
     orders.Add(lane, new Order(recipe, newTicket.gameObject));
     Debug.Log("Added key: " + lane);
 
