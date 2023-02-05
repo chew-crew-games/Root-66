@@ -58,6 +58,5 @@ public class PlayerCarController : MonoBehaviour {
     // source.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
     // source.Play();
     animator.Play("Car spin");
-
   }
 }

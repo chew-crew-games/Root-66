@@ -57,7 +57,7 @@ public class VehicleManager : MonoBehaviour {
     globalVelocity = -2f;
     Vehicle.CarDeletedEvent += OnCarDeleted;
     PlayerCarController.CrashedCarEvent += OnCrashedCar;
-    DeathBox.CarMissedEvent += (lane) => OnCarDeleted(lane, false);
+    DeathBox.CarMissedEvent += OnCrashedCar;
     InvokeRepeating("TrySpawnCar", 4, 4);
   }
 
@@ -125,6 +125,7 @@ public class VehicleManager : MonoBehaviour {
     Debug.Log(lane);
     Destroy(orders[lane].gameObject);
     orders.Remove(lane);
+    HealthUpdate.Invoke(-1);
   }
 
   void OnCarDeleted(Lane lane, bool success) {

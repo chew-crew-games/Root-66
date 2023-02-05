@@ -7,39 +7,40 @@ public class GameController : MonoBehaviour {
   public static int currentHealth = 3;
   [SerializeField] TMP_Text scoreComponent;
   [SerializeField] TMP_Text healthComponent;
+  [SerializeField] TMP_Text speedComponent;
   [SerializeField] GameObject gameOverObject;
 
   // Start is called before the first frame update
   void Start() {
     gameOverObject.SetActive(false);
-    PlayerCarController.CrashedCarEvent += (_) => IncrementHealth(-1);
     VehicleManager.RecipeScoreUpdate += IncrementPoints;
     VehicleManager.HealthUpdate += IncrementHealth;
-    UpdateText();
     Ground.LitteringFine += IncrementHealth;
+  }
+
+  void Update() {
+    UpdateText();
   }
 
   public void IncrementPoints(int earnedPoints) {
     currentScore += earnedPoints;
     scoreComponent.text = $"Score: {currentScore}";
     UpdateText();
-    if (currentScore < 0) {
-      GameOver();
-    }
   }
 
   public void IncrementHealth(int healthDiff) {
     currentHealth += healthDiff;
     healthComponent.text = $"Health: {currentHealth}";
     UpdateText();
-    if (currentHealth < 0) {
-      GameOver();
-    }
   }
 
   void UpdateText() {
+    if (currentHealth < 1 || currentScore < 0) {
+      GameOver();
+    }
     healthComponent.text = $"Health: {currentHealth}";
     scoreComponent.text = $"Score: ${currentScore}";
+    speedComponent.text = $"Speed: {(int)(70 + VehicleManager.globalVelocity * -1)} mph";
   }
 
   void GameOver() {
