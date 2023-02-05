@@ -7,7 +7,7 @@ public class Draggable : MonoBehaviour {
   bool isDragging;
   Rigidbody rb;
 
-  public void Start() {
+  void Start() {
     rb = GetComponent<Rigidbody>();
   }
 
@@ -30,17 +30,29 @@ public class Draggable : MonoBehaviour {
     }
   }
 
-  public void OnMouseDown() {
+  void OnMouseDown() {
     rb.velocity = Vector3.zero;
     rb.isKinematic = true;
     isDragging = true;
   }
 
-  public void OnMouseUp() {
+  void OnMouseUp() {
+    transform.parent.Find("Text").gameObject.SetActive(false);
     isDragging = false;
     rb.isKinematic = false;
     Vector3 pos = GetMouseWorldPos(Mouse.current.position.ReadValue()) - transform.position;
     rb.AddForce((pos - transform.position) * throwForce);
+
+  }
+
+  void OnMouseEnter() {
+    transform.parent.Find("Text").gameObject.SetActive(true);
+  }
+
+  void OnMouseExit() {
+    if (!isDragging) {
+      transform.parent.Find("Text").gameObject.SetActive(false);
+    }
   }
 
   Vector3 GetMouseWorldPos(Vector2 pointerPosition) {
