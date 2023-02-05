@@ -15,6 +15,10 @@ public class Blender : MonoBehaviour {
 
   public AudioClip[] sounds;
   public AudioSource source;
+
+  void Start() {
+    Debug.Log(ingredientSpawn.localPosition.x);
+  }
   // public List<Ingredient> ingredients = new List<Ingredient>();
 
   // public Dictionary<string, Color> dict = new Dictionary<string, Color>() {
@@ -50,7 +54,7 @@ public class Blender : MonoBehaviour {
   IEnumerator BlendCoroutine() {
     yield return new WaitForSeconds(5);
     GameObject new_smoothie = Instantiate(smoothie, ingredientSpawn.position, Quaternion.identity);
-    new_smoothie.transform.parent = transform.parent;
+    new_smoothie.transform.parent = transform.parent.parent;
     Smoothie newSmoothieScript = new_smoothie.transform.GetChild(0).GetComponent<Smoothie>();
     newSmoothieScript.GetComponent<SpriteRenderer>().color = AverageColors(contents);
     newSmoothieScript.name = string.Join(" ", contentsRecipe) + " Smoothie";
