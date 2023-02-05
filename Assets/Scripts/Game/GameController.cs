@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour {
   public static int currentHealth = 3;
   [SerializeField] TMP_Text scoreComponent;
   [SerializeField] TMP_Text healthComponent;
+  [SerializeField] TMP_Text speedComponent;
   [SerializeField] GameObject gameOverObject;
 
   // Start is called before the first frame update
@@ -15,8 +16,11 @@ public class GameController : MonoBehaviour {
     PlayerCarController.CrashedCarEvent += (_) => IncrementHealth(-1);
     VehicleManager.RecipeScoreUpdate += IncrementPoints;
     VehicleManager.HealthUpdate += IncrementHealth;
-    UpdateText();
     Ground.LitteringFine += IncrementHealth;
+  }
+
+  void Update() {
+    UpdateText();
   }
 
   public void IncrementPoints(int earnedPoints) {
@@ -40,6 +44,7 @@ public class GameController : MonoBehaviour {
   void UpdateText() {
     healthComponent.text = $"Health: {currentHealth}";
     scoreComponent.text = $"Score: ${currentScore}";
+    speedComponent.text = $"Speed: {(int)(70 + VehicleManager.globalVelocity*-1)} mph";
   }
 
   void GameOver() {
