@@ -3,7 +3,7 @@ using UnityEngine;
 public class RoadLines : MonoBehaviour {
   Animator animator;
   private float minRoadAnimationSpeed = 0.9f; // I just picked some values that felt reasonable, but these can be tweaked
-  private float maxRoadAnimationSpeed = 1.2f;
+  private float maxRoadAnimationSpeed = 2f;
   private float slope;
 
   void Start() {
