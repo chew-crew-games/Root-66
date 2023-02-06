@@ -1,21 +1,9 @@
-# Unity-2D-Template
+# Root 66
 
-A barebones Unity Template with automated build configuration with GitHub Actions. Feel free to copy the GitHub actions configuration to your own project.
+A chaotic, silly driving and cooking game made for Global Game Jam 2023. Play as a mobile smoothie cafe, careening down the scenic Root 66 delivering your root vegetable smoothies to thirsty customers!
 
-Contains the following package imports:
+[Click here to play it!](https://biggestcookie.github.io/GGJ-2023)
 
-- TextMesh Pro (Located in Imports/TextMesh Pro)
-- Input System, the new Unity Input package
+[Global Game Jam Page](https://globalgamejam.org/2023/games/root-66-4-0)
 
-Some controller scripts are hooked up such as Input and Player Controllers, using events to communicate. See the following for more information:
-
-- [Events - C# Programming Guide](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/events/)
-- [Unity-Programming-Patterns](https://github.com/Habrador/Unity-Programming-Patterns#3-observer) and the relevant [code examples](https://github.com/Habrador/Unity-Programming-Patterns/tree/master/Assets/Patterns/3.%20Observer)
-
-## GitHub Actions
-
-You will first need to configure your GitHub secrets with your Unity License. Run the 'Unity GameCI Activation' workflow included, and follow this before you run or configure any other workflows: https://game.ci/docs/github/activation
-
-Build scripts for Windows and WebGL are configured to be run manually. Please see the relevant scripts in the [`.github/workflows`](https://github.com/biggestcookie/Unity-2D-Template/tree/main/.github/workflows) folder in order to configure the relevant script for you to be run automatically.
-
-The WebGL workflow is also configured to automatically build and deploy the game to GitHub Pages. The workflows should be pretty easy to tweak as necessary for different build platforms or deployment environments. See https://game.ci/docs/ for more information.
+Made with Unity 2021.3.18f
